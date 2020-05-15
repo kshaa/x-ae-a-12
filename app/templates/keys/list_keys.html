@@ -1,0 +1,17 @@
+{% extends "main/main_base.html" %}
+
+{% block content %}
+<div class="card">
+  <h1 class="card-title">
+    User API keys
+  </h1>
+  <div class="card">
+    {% for key in keys %}
+    <div class="card">
+      <p>{{ dump(key) }}</p>
+      <a href="#" class="card-link">Delete key</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

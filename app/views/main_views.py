@@ -31,8 +31,7 @@ def member_page():
 def admin_page():
     return render_template('main/admin_page.html')
 
-
-@key_blueprint.route('/main/profile', methods=['GET', 'POST'])
+@main_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def user_profile_page():
     # Initialize form

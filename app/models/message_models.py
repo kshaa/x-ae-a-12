@@ -9,6 +9,10 @@ class APIKeys(db.Model):
     owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     key = db.Column(db.String(255), nullable=False, server_default=u'', unique=True)
 
+# Define the User profile form
+class APIKeyCreateForm(FlaskForm):
+    submit = SubmitField('Save')
+
 # Define the Topic data model
 class Topic(db.Model):
     __tablename__ = 'topics'
