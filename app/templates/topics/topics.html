@@ -1,0 +1,42 @@
+{% extends "main/main_base.html" %}  {# main/main_base.html extends layout.html #}
+
+{% block content %}
+
+<p><a href={{ url_for('topics.view_topics_page') }}></a></p>
+
+
+
+<!DOCTYPE html>
+<html lang = "en">
+   <head></head>
+   <body>
+      
+      <h3>
+         <a href = "/topics"></a>
+      </h3>
+      
+      <hr/>
+      <h3>Topics (<a href = "/topics/create">Add Topic
+         </a>)</h3>
+      
+      <table>
+         <thead>
+            <tr>
+                <th>name</th>
+                <th>label</th>
+            </tr>
+         </thead>
+         
+         <tbody>
+            {% for topic in topics %}
+               <tr>
+                  <td>{{ topic.name }}</td>
+                  <td>{{ topic.label }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      
+   </body>
+</html>
+{% endblock %}

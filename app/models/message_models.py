@@ -23,3 +23,12 @@ class Messages(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     topic_id = db.Column(db.Integer(), db.ForeignKey('topics.id', ondelete='CASCADE'))
     content = db.Column(db.Unicode(255), server_default=u'') # for display purposes
+
+
+# Define the Topics form
+class TopicsForm(FlaskForm):
+    name = StringField('name', validators=[
+        validators.DataRequired('Topic name is required')])
+    label = StringField('label', validators=[
+        validators.DataRequired('Label is required')])
+    submit = SubmitField('Save')
