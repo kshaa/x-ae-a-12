@@ -30,3 +30,12 @@ hr { border-color: #cccccc; margin: 0px; }
     opacity: 1;
     pointer-events: initial;
 }
+
+/* Hacks to make user pages work w/ Bootstrap v4 */
+.row {
+    margin: 0;
+}
+
+.col-xs-6 {
+    margin-right: 8px; 
+}

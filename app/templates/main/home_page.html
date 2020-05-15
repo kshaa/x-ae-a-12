@@ -6,7 +6,14 @@
     <p><a href={{ url_for('topics.view_topics_page') }}>{%trans%}Message topics{%endtrans%}</a></p>
     <p><a href={{ url_for('main.admin_page') }}>{%trans%}Admin Page{%endtrans%}</a>
     {% else %}
-    <p><a href={{ url_for('user.register') }}>{%trans%}Register{%endtrans%}</a></p>
-    <p><a href={{ url_for('user.login') }}>{%trans%}Sign in{%endtrans%}</a></p>
+    <div class="text-center">
+        <div>
+            <p>Developer tool for sending notifications</p>
+        </div>
+        <div>
+            <span class="mx-4"><a href={{ url_for('user.register') }}>{%trans%}Register{%endtrans%}</a></span>
+            <span class="mx-4"><a href={{ url_for('user.login') }}>{%trans%}Sign in{%endtrans%}</a></span>
+        </div>
+    </div>
     {% endif %}
 {% endblock %}
