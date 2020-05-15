@@ -17,12 +17,6 @@ main_blueprint = Blueprint('main', __name__, template_folder='templates')
 def home_page():
     return render_template('main/home_page.html')
 
-# The Admin page is accessible to users with the 'admin' role
-@main_blueprint.route('/admin')
-@roles_required('admin')  # Limits access to users with the 'admin' role
-def admin_page():
-    return render_template('main/admin_page.html')
-
 @main_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():

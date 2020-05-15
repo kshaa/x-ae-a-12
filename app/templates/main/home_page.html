@@ -4,7 +4,6 @@
     {% if current_user.is_authenticated %}
     <p><a href={{ url_for('keys.list_keys') }}>{%trans%}API keys{%endtrans%}</a></p>
     <p><a href={{ url_for('topics.view_topics_page') }}>{%trans%}Message topics{%endtrans%}</a></p>
-    <p><a href={{ url_for('main.admin_page') }}>{%trans%}Admin Page{%endtrans%}</a>
     {% else %}
     <div class="text-center">
         <div>
