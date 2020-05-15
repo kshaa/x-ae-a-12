@@ -1,7 +1,3 @@
-# Copyright 2014 SolidBuilds.com. All rights reserved
-#
-# Authors: Ling Thio <ling.thio@gmail.com>
-
 from flask_user import UserMixin
 # from flask_user.forms import RegisterForm
 from flask_wtf import FlaskForm
@@ -29,28 +25,6 @@ class User(db.Model, UserMixin):
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
-
-# Define the API Keys data model
-class APIKeys(db.Model):
-    __tablename__ = 'apikeys'
-    id = db.Column(db.Integer(), primary_key=True)
-    owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    key = db.Column(db.String(255), nullable=False, server_default=u'', unique=True)
-
-# Define the Topic data model
-class Topic(db.Model):
-    __tablename__ = 'topics'
-    id = db.Column(db.Integer(), primary_key=True)
-    owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)  # for @roles_accepted()
-    label = db.Column(db.Unicode(255), server_default=u'') # for display purposes
-
-# Define the Messages data model
-class Messages(db.Model):
-    __tablename__ = 'message'
-    id = db.Column(db.Integer(), primary_key=True)
-    topic_id = db.Column(db.Integer(), db.ForeignKey('topics.id', ondelete='CASCADE'))
-    content = db.Column(db.Unicode(255), server_default=u'') # for display purposes
 
 # Define the Role data model
 class Role(db.Model):

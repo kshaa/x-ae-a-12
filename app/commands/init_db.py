@@ -11,6 +11,7 @@ from flask_script import Command
 
 from app import db
 from app.models.user_models import User, Role
+from app.models.message_models import APIKeys, Messages, Topic
 
 class InitDbCommand(Command):
     """ Initialize the database."""
