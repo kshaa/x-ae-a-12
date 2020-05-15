@@ -61,11 +61,14 @@ def create_app(extra_config_settings={}):
     init_email_error_handler(app)
 
     # Setup Flask-User to handle user account related forms
-    from .models.user_models import User
+    from .models.user_models import User, Role
     from .views.main_views import user_profile_page
 
     # Setup Flask-User
     user_manager = UserManager(app, db, User)
+
+    # Import message models
+    from .models.message_models import APIKeys, Messages, Topic
 
     @app.context_processor
     def context_processor():
