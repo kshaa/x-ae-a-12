@@ -11,3 +11,22 @@ hr { border-color: #cccccc; margin: 0px; }
 .with-margins { margin: 10px; }
 
 .col-centered { float: none; margin: 0 auto; }
+
+/* API Keys */
+.api-key-card .api-key .toggled {
+    display: none;
+}
+
+.api-key-card .api-key .toggled.visible {
+    display: initial;
+}
+
+.api-key-card .key-actions .toggled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.api-key-card .key-actions .toggled.visible {
+    opacity: 1;
+    pointer-events: initial;
+}

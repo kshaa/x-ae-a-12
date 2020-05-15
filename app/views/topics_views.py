@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template
 from flask import request, url_for
-from pprint import pprint
+from flask_user import current_user, login_required
 
 from app import db
 from app.models.message_models import TopicsForm, Topic
@@ -35,5 +35,4 @@ def topics_page():
 @login_required
 def view_topics_page():
      topics = Topic.query.all()
-     pprint(vars(topics[0]))
-     return render_template('topics/topics.html', topics = Topic.query.all())
+     return render_template('topics/topics.html', page_title="Message topics", topics = Topic.query.all())

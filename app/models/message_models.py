@@ -1,17 +1,24 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 from app import db
+from secrets import token_hex
 
 # Define the API Keys data model
 class APIKeys(db.Model):
     __tablename__ = 'apikeys'
     id = db.Column(db.Integer(), primary_key=True)
     owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    key = db.Column(db.String(255), nullable=False, server_default=u'', unique=True)
+    key = db.Column(db.String(512), nullable=False, unique=True)
+    label = db.Column(db.String(512), nullable=True)
+
+    def __init__(self):
+        self.key = token_hex(256) 
 
 # Define the User profile form
 class APIKeyCreateForm(FlaskForm):
-    submit = SubmitField('Save')
+    label = StringField('Label', validators=[
+        validators.DataRequired('Label is required')])
+    submit = SubmitField('Save API key')
 
 # Define the Topic data model
 class Topic(db.Model):
@@ -28,11 +35,10 @@ class Messages(db.Model):
     topic_id = db.Column(db.Integer(), db.ForeignKey('topics.id', ondelete='CASCADE'))
     content = db.Column(db.Unicode(255), server_default=u'') # for display purposes
 
-
 # Define the Topics form
 class TopicsForm(FlaskForm):
-    name = StringField('name', validators=[
+    name = StringField('Name', validators=[
         validators.DataRequired('Topic name is required')])
-    label = StringField('label', validators=[
+    label = StringField('Label', validators=[
         validators.DataRequired('Label is required')])
-    submit = SubmitField('Save')
+    submit = SubmitField('Save topic')

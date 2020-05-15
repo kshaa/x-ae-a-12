@@ -14,7 +14,7 @@ key_blueprint = Blueprint('keys', __name__, template_folder='templates')
 @login_required
 def list_keys():
     keys = APIKeys.query.all()
-    return render_template('keys/list_keys.html', keys=keys)
+    return render_template('keys/list_keys.html', page_title="User API keys", keys=keys)
 
 @key_blueprint.route('/keys/create', methods=['GET', 'POST'])
 @login_required
@@ -24,7 +24,8 @@ def create_key():
 
     # Process valid POST
     if request.method == 'POST' and form.validate():
-        # Create API key
+        # Populate key
+        form.populate_obj(key)
         key.owner_user_id = current_user.id
 
         # Save API key
@@ -35,4 +36,4 @@ def create_key():
         return redirect(url_for('keys.list_keys'))
 
     # Process GET or invalid POST
-    return render_template('keys/create_key.html', form=form)
+    return render_template('keys/create_key.html', page_title="Create user API key", form=form)

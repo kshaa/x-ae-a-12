@@ -1,17 +1,44 @@
 {% extends "main/main_base.html" %}
 
-{% block content %}
-<div class="card">
-  <h1 class="card-title">
-    User API keys
-  </h1>
-  <div class="card">
-    {% for key in keys %}
-    <div class="card">
-      <p>{{ dump(key) }}</p>
-      <a href="#" class="card-link">Delete key</a>
+{% block content %}  
+<a href={{ url_for('keys.create_key') }}>Create new API key</a>
+{% for key in keys %}
+<div class="mt-4 card">
+  <div class="card api-key-card">
+    <div class="card-body">
+      <h5 class="card-title">{{ key.label }}</h5>
+      <div class="api-key">
+        <p class="card-text toggled short-key visible">{{ key.key[:10] }}... (~200 symbols truncated)</p>
+        <p class="card-text toggled long-key">{{ key.key }}</p>
+      </div>
+      <div class="key-actions">
+        <a href="#" class="card-link toggled show-key visible">Show key</a>
+        <a href="#" class="card-link toggled hide-key">Hide key</a>
+        <a href="#" class="card-link delete-key">Delete key</a>
+      </div>
     </div>
-    {% endfor %}
   </div>
 </div>
+{% endfor %}
+<script>
+  const keyCards = document.querySelectorAll('.api-key-card')
+  
+  for (let keyCard of keyCards) {
+    const showButton = keyCard.querySelector('.show-key')
+    const hideButton = keyCard.querySelector('.hide-key')
+    const short = keyCard.querySelector('.short-key')
+    const long = keyCard.querySelector('.long-key')
+    const toggle = () => {
+      showButton.classList.toggle('visible')
+      hideButton.classList.toggle('visible')
+      short.classList.toggle('visible')
+      long.classList.toggle('visible')
+    }
+    const visible = () => long.classList.contains('visible')
+    const show = () => { !visible() && toggle() }
+    const hide = () => { visible() && toggle() }
+    showButton.addEventListener('click', show)
+    hideButton.addEventListener('click', hide)
+  }
+</script>
 {% endblock %}

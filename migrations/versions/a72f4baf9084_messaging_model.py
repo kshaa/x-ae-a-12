@@ -18,7 +18,8 @@ def upgrade():
     op.create_table('apikeys',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_user_id', sa.Integer(), nullable=True),
-    sa.Column('key', sa.String(length=255), server_default='', nullable=False),
+    sa.Column('key', sa.String(length=512), server_default='', nullable=False),
+    sa.Column('label', sa.String(length=512), server_default='', nullable=False),
     sa.ForeignKeyConstraint(['owner_user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('key')
