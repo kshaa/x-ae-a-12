@@ -4,14 +4,13 @@
 from datetime import datetime
 import os
 
-from flask import Flask
+from flask import Flask, request
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_migrate import Migrate, MigrateCommand
 from flask_user import UserManager
 from flask_wtf.csrf import CSRFProtect
-
 
 # Instantiate Flask extensions
 csrf_protect = CSRFProtect()
@@ -47,7 +46,7 @@ def create_app(extra_config_settings={}):
 
     # Register blueprints
     from .views import register_blueprints
-    register_blueprints(app)
+    register_blueprints(csrf_protect, app)
 
     # Define bootstrap_is_hidden_field for flask-bootstrap's bootstrap_wtf.html
     from wtforms.fields import HiddenField
@@ -69,9 +68,15 @@ def create_app(extra_config_settings={}):
     # Import message models
     from .models.message_models import APIKeys, Messages, Topic
 
+    from app.models.user_models import NotificationSubscriptionForm, NotificationUnsubscriptionForm
     @app.context_processor
     def context_processor():
-        return dict(user_manager=user_manager)
+        return dict(
+            server_public_notification_key=app.config['SERVER_PUBLIC_NOTIFICATION_KEY'],
+            user_manager=user_manager,
+            subscribe_form=NotificationSubscriptionForm(request.form),
+            unsubscribe_form=NotificationUnsubscriptionForm(request.form)
+        )
 
     return app
 

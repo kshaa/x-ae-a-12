@@ -39,3 +39,41 @@ hr { border-color: #cccccc; margin: 0px; }
 .col-xs-6 {
     margin-right: 8px; 
 }
+
+/* Notification bell icon */
+.js-push-btn img {
+    width: 28px;
+}
+
+.js-push-btn.available img {
+    filter: invert() contrast(0.6);
+}
+
+.js-push-btn.unsupported img {
+    filter: invert() contrast(0.6) brightness(4); 
+}
+
+.js-push-btn.enabled img {
+    filter: invert() contrast(0.2) brightness(1.2) sepia(100%) hue-rotate(90deg); 
+}
+
+.js-push-btn.blocked img {
+    filter: invert() contrast(0.2) brightness(1.2) sepia(100%) hue-rotate(290deg); 
+}
+
+.js-push-btn.error img {
+    filter: invert() contrast(0.2) brightness(1.2) sepia(100%) hue-rotate(190deg); 
+}
+
+@keyframes loading {
+    0%   {transform: scale(1);}
+    50%  {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}
+  
+.js-push-btn.loading img {
+    filter: invert() contrast(0.6);
+    animation-name: loading;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}

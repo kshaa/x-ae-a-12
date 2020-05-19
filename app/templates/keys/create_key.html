@@ -1,17 +1,17 @@
 {% extends "main/main_base.html" %}  {# main/main_base.html extends layout.html #}
 
 {% block content %}
-  <a href={{ url_for('keys.list_keys') }}>Back to key listing</a>
 
   {% from "common/form_macros.html" import render_field, render_submit_field %}
   <form action="" method="POST" class="form" role="form">
     <div class="row">
       <div class="col-sm-6 col-md-5 col-lg-4">
-      {{ form.hidden_tag() }}
+        <a href={{ url_for('keys.list_keys') }}>Back to key listing</a>
+        {{ form.hidden_tag() }}
 
-      {{ render_field(form.label, tabindex=250) }}
+        {{ render_field(form.label, tabindex=250) }}
 
-      {{ render_submit_field(form.submit, tabindex=280) }}
+        {{ render_submit_field(form.submit, tabindex=280) }}
       </div>
     </div>
   </form>

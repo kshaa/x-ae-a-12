@@ -33,6 +33,7 @@ def upgrade():
     sa.Column('is_active', sa.Boolean(), server_default='0', nullable=False),
     sa.Column('first_name', sa.String(length=50), server_default='', nullable=False),
     sa.Column('last_name', sa.String(length=50), server_default='', nullable=False),
+    sa.Column('subscription', sa.String(length=1024), server_default='', nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     )

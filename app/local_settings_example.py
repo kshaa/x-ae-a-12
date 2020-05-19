@@ -15,6 +15,7 @@ SECRET_KEY = 'This is an UNSECURE Secret. CHANGE THIS for production environment
 # SQLAlchemy settings
 SQLALCHEMY_DATABASE_URI = 'sqlite:///../app.sqlite'
 SQLALCHEMY_TRACK_MODIFICATIONS = False    # Avoids a SQLAlchemy Warning
+SQLALCHEMY_ECHO = False # Debug raw SQL queries 
 
 # Flask-Mail settings
 # For smtp.gmail.com to work, you MUST set "Allow less secure apps" to ON in Google Accounts.
@@ -36,4 +37,7 @@ USER_EMAIL_SENDER_EMAIL = 'yourname@gmail.com'
 
 ADMINS = [
     '"Admin One" <admin1@gmail.com>',
-    ]
+]
+
+# Push notification settings
+SERVER_PUBLIC_NOTIFICATION_KEY = ""

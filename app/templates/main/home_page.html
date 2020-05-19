@@ -2,8 +2,20 @@
 
 {% block content %}
     {% if current_user.is_authenticated %}
-    <p><a href={{ url_for('keys.list_keys') }}>{%trans%}API keys{%endtrans%}</a></p>
-    <p><a href={{ url_for('topics.view_topics_page') }}>{%trans%}Message topics{%endtrans%}</a></p>
+    <p>
+        Notification bell legend:<br>
+        Grey — Push notifications are not supported on this device<br>
+        Black — Push notifications are available, click to subscribe<br>
+        Green — Push notifications are enabled<br>
+        Red — Push notifications are blocked by the user<br>
+        Blue — An error occured while configuring notifications
+    </p>
+    <p>
+        Example message triggering webhook:<br>
+        http://&lt;XAEA12_SERVER&gt;/api/notify?key=&lt;API_KEY&gt;&topic=&lt;TOPIC_CODE&gt;&message=&lt;MESSAGE&gt;
+    </p>
+    <p><a href={{ url_for('topics.view_topics_page') }}>{%trans%}Message topics{%endtrans%}</a> — Grouped messages that are notified to the user</p>
+    <p><a href={{ url_for('keys.list_keys') }}>{%trans%}API keys{%endtrans%}</a> — Authentication for messages triggered through a webhook</p>
     {% else %}
     <div class="text-center">
         <div>

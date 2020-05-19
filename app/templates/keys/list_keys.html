@@ -3,19 +3,17 @@
 {% block content %}  
 <a href={{ url_for('keys.create_key') }}>Create new API key</a>
 {% for key in keys %}
-<div class="mt-4 card">
-  <div class="card api-key-card">
-    <div class="card-body">
-      <h5 class="card-title">{{ key.label }}</h5>
-      <div class="api-key">
-        <p class="card-text toggled short-key visible">{{ key.key[:10] }}... (~200 symbols truncated)</p>
-        <p class="card-text toggled long-key">{{ key.key }}</p>
-      </div>
-      <div class="key-actions">
-        <a href="#" class="card-link toggled show-key visible">Show key</a>
-        <a href="#" class="card-link toggled hide-key">Hide key</a>
-        <a href="#" class="card-link delete-key">Delete key</a>
-      </div>
+<div class="card mt-4 api-key-card">
+  <div class="card-body">
+    <h5 class="card-title">{{ key.label }}</h5>
+    <div class="api-key">
+      <p class="card-text toggled short-key visible">{{ key.key[:10] }}... (~200 symbols truncated)</p>
+      <p class="card-text toggled long-key">{{ key.key }}</p>
+    </div>
+    <div class="key-actions">
+      <a href="#" class="card-link toggled show-key visible">Show key</a>
+      <a href="#" class="card-link toggled hide-key">Hide key</a>
+      <a href="#" class="card-link delete-key">Delete key</a>
     </div>
   </div>
 </div>

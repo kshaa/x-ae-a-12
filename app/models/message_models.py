@@ -18,7 +18,7 @@ class APIKeys(db.Model):
 class APIKeyCreateForm(FlaskForm):
     label = StringField('Label', validators=[
         validators.DataRequired('Label is required')])
-    submit = SubmitField('Save API key')
+    submit = SubmitField('Create API key')
 
 # Define the Topic data model
 class Topic(db.Model):
