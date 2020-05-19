@@ -62,7 +62,7 @@ self.addEventListener("message", function(event) {
   const type = message.type;
   if (type === 'PUBLIC_PUSH_KEY') {
     applicationServerPublicKey = message.key;
-    console.log('[Service Worker]: Registered public server key')
+    console.log('[Service Worker]: Registered public server key - ' + applicationServerPublicKey)
   } else {
     console.error('[Service Worker]: Unknown message type: ' + type);
   }
