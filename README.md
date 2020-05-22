@@ -21,4 +21,11 @@ Example user story:
 - Subscribe to push notifications using bell icon
 - Create message topic
 - Create API key
-- Send messages using CLI through a webhook `http://localhost:5000/api/notify?key=<API_KEY>&topic=<TOPIC_CODE>&message=<MESSAGE>`  
+- Send messages using CLI using `notify.sh`
+
+```bash
+export API_KEY="<LONG_API_KEY_HERE>"
+export HOST="http://localhost:5000"
+
+./notify.sh "<TOPIC_CODE>" "Hello world!"
+```
