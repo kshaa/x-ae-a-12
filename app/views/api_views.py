@@ -24,13 +24,16 @@ def notify():
     # Input
     api_key_value = request.args.get('api_key')
     topic_id = request.args.get('topic_id')
+    topic_code = request.args.get('topic_code')
     message_content = request.args.get('message')
 
     # Validations    
     if not api_key_value:
         return response(400, False, "api_key not defined")
-    if not topic_id:
-        return response(400, False, "topic_id not defined")
+    if not topic_id and not topic_code:
+        return response(400, False, "neither topic_id nor topic_code is defined")
+    if topic_id and topic_code:
+        return response(400, False, "only one of topic_id or topic_code must be defined")
     if not message_content:
         return response(400, False, "message not defined")
 
@@ -39,7 +42,11 @@ def notify():
     if not api_key:
         return response(400, False, "api_key not found")
 
-    topic = Topic.query.filter(Topic.id == topic_id).one()
+    if topic_id:
+        topic = Topic.query.filter(Topic.id == topic_id).one()
+    else:
+        topic = Topic.query.filter(Topic.code == topic_code).one()
+
     if not topic:
         return response(400, False, "topic not found")
 
