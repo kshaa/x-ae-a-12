@@ -54,5 +54,5 @@ def view_messages_page(topic_id):
     topic = Topic.query.filter (Topic.id == topic_id).one()
     if topic.owner_user_id != current_user.id:
         return 'bad request!', 400
-    messages = Messages.query.filter(Messages.topic_id == topic_id).limit(20).all()
+    messages = Messages.query.filter(Messages.topic_id == topic_id).order_by(Messages.topic_id.desc()).limit(20).all()
     return render_template('messages/messages.html', topic_id = topic_id, page_title = "Topic messages", messages = messages, topic = topic)
