@@ -1,0 +1,19 @@
+{% extends "main/main_base.html" %}
+
+{% block content %}
+<a href="/topics/{{ topic_id }}/messages/create">Create message</a>
+
+{% if messages|length >0 %}
+{% for message in messages %}
+<div class="card mt-4">
+   <div class="card-body">
+     <h5 class="card-title">Message</h5>
+     <div class="content">
+         {{ message.content }}
+     </div>
+   </div>
+ </div>
+{% endfor %}
+{% endif %}
+      
+{% endblock %}

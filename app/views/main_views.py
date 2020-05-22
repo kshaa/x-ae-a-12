@@ -4,14 +4,11 @@
 
 
 from flask import Response, Blueprint, redirect, render_template
-from flask import request, url_for, send_from_directory, current_app
+from flask import request, url_for, send_from_directory
 from flask_user import current_user, login_required, roles_required
 
 from app import db
 from app.models.user_models import UserProfileForm, NotificationSubscriptionForm, NotificationUnsubscriptionForm
-
-from pywebpush import webpush
-import json
 
 main_blueprint = Blueprint('main', __name__, static_folder='static', template_folder='templates')
 
@@ -57,7 +54,6 @@ def unsubscribe():
 # The Home page is accessible to anyone
 @main_blueprint.route('/')
 def home_page():
-    # webpush(subscription_info = json.loads(current_user.subscription), data = "Hey, Dave!", vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
     return render_template('main/home_page.html')
 
 @main_blueprint.route('/profile', methods=['GET', 'POST'])

@@ -41,4 +41,10 @@ class TopicsForm(FlaskForm):
         validators.DataRequired('Topic code is required')])
     label = StringField('Label', validators=[
         validators.DataRequired('Topic label is required')])
-    submit = SubmitField('Save topic')
+    submit = SubmitField('Create topic')
+
+# Define the Topics form
+class MessageForm(FlaskForm):
+    content = StringField('Content', validators=[
+        validators.DataRequired('Content is required')])
+    submit = SubmitField('Create message')
