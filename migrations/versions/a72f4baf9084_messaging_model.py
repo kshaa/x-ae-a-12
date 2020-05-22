@@ -27,11 +27,11 @@ def upgrade():
     op.create_table('topics',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_user_id', sa.Integer(), nullable=True),
-    sa.Column('name', sa.String(length=50), server_default='', nullable=False),
+    sa.Column('code', sa.String(length=50), server_default='', nullable=False),
     sa.Column('label', sa.Unicode(length=255), server_default='', nullable=True),
     sa.ForeignKeyConstraint(['owner_user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.UniqueConstraint('code')
     )
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),

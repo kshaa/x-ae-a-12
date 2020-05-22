@@ -25,7 +25,7 @@ class Topic(db.Model):
     __tablename__ = 'topics'
     id = db.Column(db.Integer(), primary_key=True)
     owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)  # for @roles_accepted()
+    code = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)  # for @roles_accepted()
     label = db.Column(db.Unicode(255), server_default=u'') # for display purposes
 
 # Define the Messages data model
@@ -37,8 +37,8 @@ class Messages(db.Model):
 
 # Define the Topics form
 class TopicsForm(FlaskForm):
-    name = StringField('Name', validators=[
-        validators.DataRequired('Topic name is required')])
+    code = StringField('Code', validators=[
+        validators.DataRequired('Topic code is required')])
     label = StringField('Label', validators=[
-        validators.DataRequired('Label is required')])
+        validators.DataRequired('Topic label is required')])
     submit = SubmitField('Save topic')
