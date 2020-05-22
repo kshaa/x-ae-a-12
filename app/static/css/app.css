@@ -41,6 +41,10 @@ hr { border-color: #cccccc; margin: 0px; }
 }
 
 /* Notification bell icon */
+.js-push-btn {
+    cursor: pointer;
+}
+
 .js-push-btn img {
     width: 28px;
 }

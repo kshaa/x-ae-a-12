@@ -2,3 +2,6 @@ __pycache__
 local_settings.py
 /data
 /.env
+/.env*
+!/.env.sample
+/notify_local.sh

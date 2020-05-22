@@ -20,15 +20,26 @@
     <body>
         {% block body %}
         <!-- Application specific HTML -->
-        <div id="header-div" class="mx-auto container-md row with-margins d-flex align-items-center justify-content-between flex-md-wrap">
-            <div class="col-sm my-2"><a class="text-body" href="/"><h1 class="no-margins">X Æ A-12</h1></a></div>
-            <div class="col-sm my-2 text-right">
+        <div class="bg-light">
+            <div class="navbar navbar-expand-lg navbar-light bg-light mx-auto row container-md with-margins d-flex justify-content-between">
+                <div class="navbar-brand"><a class="text-body" href="/"><h1 class="no-margins">X Æ A-12</h1></a></div>
                 {% if current_user.is_authenticated %}
-                    <span class="js-push-btn"><img src="{{ url_for('static', filename='images/bell.png') }}"></img></span>
-                    &nbsp; | &nbsp;
-                    <a href="{{ url_for('main.profile') }}">{{ current_user.first_name or current_user.username or current_user.email }}</a>
-                    &nbsp; | &nbsp;
-                    <a href="{{ url_for('user.logout') }}">Sign out</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <span class="js-push-btn nav-link"><span class="d-lg-none mr-2">Notify</span><img src="{{ url_for('static', filename='images/bell.png') }}"></img></span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.profile') }}">{{ current_user.first_name or current_user.username or current_user.email }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('user.logout') }}">Sign out</a>
+                        </li>
+                        </ul>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -63,6 +74,11 @@
 
         {% block post_content %}{% endblock %}
         </div>
+
+        <!-- JS, Popper.js, and jQuery (for bootstrap JS functionality) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
         <!-- Global CSRF token for Push notification management -->
         <form action="" method="POST" class="form" role="form">

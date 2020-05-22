@@ -3,3 +3,4 @@ local_settings.py
 /data
 /.env
 /.env.sample
+/notify_local.sh
