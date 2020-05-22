@@ -3,10 +3,14 @@ from flask import request, url_for, current_app
 from flask_user import current_user, login_required
 
 from app import db
-from app.models.message_models import Messages, MessageForm
+from app.models.message_models import Messages, MessageForm, Topic
+from app.models.user_models import User
 
 from pywebpush import webpush
 import json
+
+from sqlalchemy import join
+from sqlalchemy.sql import select
 
 message_blueprint = Blueprint('messages', __name__, template_folder='templates')
 
@@ -39,5 +43,8 @@ def create_message_page(topic_id):
 @message_blueprint.route('/topics/<topic_id>/messages', methods=['GET'])
 @login_required
 def view_messages_page(topic_id):
+    topic = Topic.query.filter (Topic.id == topic_id).one()
+    if topic.owner_user_id != current_user.id:
+        return 'bad request!', 400
     messages = Messages.query.filter(Messages.topic_id == topic_id).all()
-    return render_template('messages/messages.html', topic_id = topic_id, page_title = "Topic messages", messages = messages)
+    return render_template('messages/messages.html', topic_id = topic_id, page_title = "Topic messages", messages = messages, topic = topic)
