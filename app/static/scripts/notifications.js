@@ -192,7 +192,7 @@ if (getServerPublicKey() && 'serviceWorker' in navigator && 'PushManager' in win
     buttonState('available');
 
     navigator.serviceWorker
-        .register('/sw.js')
+        .register('/sw.js?v2')
         .then(function (swReg) {
             console.log('Service Worker is registered', swReg);
             swRegistration = swReg;
