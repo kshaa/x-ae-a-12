@@ -13,6 +13,7 @@ Flask-WTF==0.14.2
 Flask-User==1.0.1.5
 
 # Extras
+environs==7.4.0
 pywebpush==1.11.0
 email-validator==1.1.1
 PyMySQL==0.9.3

@@ -1,0 +1,18 @@
+version: "3.5"
+services:
+    database:
+        image: mysql:8.0
+        restart: always
+        env_file: .env
+        ports:
+        - 3306:3306
+        volumes:
+        - ./data:/var/lib/mysql
+    app:
+        build: .
+        ports:
+        - 5000:5000
+        restart: always
+        env_file: .env
+        depends_on: 
+        - database

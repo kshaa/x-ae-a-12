@@ -25,10 +25,13 @@ def create_app(extra_config_settings={}):
     # Instantiate Flask
     app = Flask(__name__)
 
-    # Load common settings
+    # Load constant app settings & environment variable settings
     app.config.from_object('app.settings')
-    # Load environment specific settings
-    app.config.from_object('app.local_settings')
+    # Load environment configuration file settings
+    try:
+        app.config.from_object('app.local_settings')
+    except:
+        print("Warning: Failed to load configurations from 'app.local_settings'")
     # Load extra settings from extra_config_settings param
     app.config.update(extra_config_settings)
 
@@ -114,10 +117,3 @@ def init_email_error_handler(app):
     )
     mail_handler.setLevel(logging.ERROR)
     app.logger.addHandler(mail_handler)
-
-    # Log errors using: app.logger.error('Some error message')
-
-
-
-
-
