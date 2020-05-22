@@ -4,25 +4,15 @@
 
 <p><a href={{ url_for('topics.view_topics_page') }}></a></p>
       <a href="/topics/create">Add Topic</a>
-      
       {% if topics|length >0 %}
-      <table>
-         <thead>
-            <tr>
-                <th>Code</th>
-                <th>Label</th>
-            </tr>
-         </thead>
-         
          {% for topic in topics %}
-         <tbody>
-            <tr>
-               <td>{{ topic.code }}</td>
-               <td>{{ topic.label }}</td>
-            </tr>
-         </tbody>
+         <div class="card mt-4 topics-card">
+            <h5 class="card-header">Topic</h5>
+            <div class="card-body">
+              <a href="/topics/{{topic.id}}/messages">{{ topic.label }} [{{ topic.code }}]</a>
+              </div>
+         </div>
          {% endfor %}
-      </table>
       {% endif %}
-      
+   
 {% endblock %}
