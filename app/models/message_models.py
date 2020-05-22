@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 from app import db
 from secrets import token_hex
+from sqlalchemy.orm import relationship
 
 # Define the API Keys data model
 class APIKeys(db.Model):
@@ -10,6 +11,7 @@ class APIKeys(db.Model):
     owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     key = db.Column(db.String(512), nullable=False, unique=True)
     label = db.Column(db.String(512), nullable=True)
+    owner_user = relationship("User", foreign_keys=[owner_user_id])
 
     def __init__(self):
         self.key = token_hex(256) 
