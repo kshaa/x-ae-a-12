@@ -11,7 +11,10 @@ Flask-Script==2.0.5
 Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
 Flask-User==1.0.1.5
+
+# Extras
 pywebpush==1.11.0
+email-validator==1.1.1
 
 # Automated tests
 werkzeug==0.16.1

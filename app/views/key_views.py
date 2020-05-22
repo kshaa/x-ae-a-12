@@ -13,7 +13,7 @@ key_blueprint = Blueprint('keys', __name__, template_folder='templates')
 @key_blueprint.route('/keys')
 @login_required
 def list_keys():
-    keys = APIKeys.query.all()
+    keys = APIKeys.query.filter(APIKeys.owner_user_id == current_user.id).all()
     return render_template('keys/list_keys.html', page_title="User API keys", keys=keys)
 
 @key_blueprint.route('/keys/create', methods=['GET', 'POST'])

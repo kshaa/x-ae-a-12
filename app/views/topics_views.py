@@ -34,5 +34,5 @@ def topics_page():
 @topic_blueprint.route('/topics', methods=['GET'])
 @login_required
 def view_topics_page():
-     topics = Topic.query.all()
-     return render_template('topics/topics.html', page_title="Message topics", topics = Topic.query.all())
+    topics = Topic.query.filter(Topic.owner_user_id == current_user.id).all()
+    return render_template('topics/topics.html', page_title = "Message topics", topics = topics)
