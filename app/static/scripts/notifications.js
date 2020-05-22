@@ -165,6 +165,16 @@ function getServerPublicKey() {
     return applicationServerPublicKey
 }
 
+function getServerURL() {
+    if (typeof applicationServerURL === 'undefined') {
+        return null
+    }
+    if (applicationServerURL === '') {
+        return null
+    }
+    return applicationServerURL
+}
+
 if (!getServerPublicKey()) {
     console.error('Server public notification key not defined, notification management disabled');
     buttonState('error');
@@ -186,6 +196,10 @@ if (getServerPublicKey() && 'serviceWorker' in navigator && 'PushManager' in win
             swRegistration.active.postMessage(JSON.stringify({
                 type: 'PUBLIC_PUSH_KEY',
                 key: getServerPublicKey()
+            }))
+            swRegistration.active.postMessage(JSON.stringify({
+                type: 'SERVER_URL',
+                key: getServerURL()
             }))
             initializeUI();
         })

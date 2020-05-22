@@ -16,17 +16,17 @@ function urlB64ToUint8Array(base64String) {
 }
 
 var applicationServerPublicKey = null
+var serverURL = null
 
 self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
   
-  const title = 'Push Codelab';
+  const title = 'X Æ A-12';
   const options = {
-    // body: 'Yay it works.',
     body: event.data.text(),
-    icon: 'images/icon.png',
-    badge: 'images/badge.png'
+    icon: 'static/images/favicon_192.png',
+    badge: 'static/images/bell.png'
   };
   
   event.waitUntil(self.registration.showNotification(title, options));
@@ -37,12 +37,14 @@ self.addEventListener('notificationclick', function(event) {
   
   event.notification.close();
   
-  event.waitUntil(
-    clients.openWindow('https://developers.google.com/web/')
+  if (serverURL) {
+    event.waitUntil(
+      clients.openWindow(serverURL)
     );
-  });
+  }
+});
   
-  self.addEventListener('pushsubscriptionchange', function(event) {
+self.addEventListener('pushsubscriptionchange', function(event) {
     console.log('[Service Worker]: \'pushsubscriptionchange\' event fired.');
     const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
     event.waitUntil(
@@ -63,6 +65,9 @@ self.addEventListener("message", function(event) {
   if (type === 'PUBLIC_PUSH_KEY') {
     applicationServerPublicKey = message.key;
     console.log('[Service Worker]: Registered public server key - ' + applicationServerPublicKey)
+  } else if (type === 'SERVER_URL') {
+    serverURL = message.key;
+    console.log('[Service Worker]: Registered server URL - ' + serverURL)
   } else {
     console.error('[Service Worker]: Unknown message type: ' + type);
   }

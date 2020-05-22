@@ -90,6 +90,7 @@
         <!-- Push notification management -->
         <script>
             var applicationServerPublicKey = "{{ server_public_notification_key }}"
+            var applicationServerURL = "{{ server_url }}"
         </script>
         <script src="{{ url_for('static', filename='scripts/notifications.js') }}"></script>
         {% endblock %}

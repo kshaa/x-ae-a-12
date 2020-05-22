@@ -27,7 +27,7 @@ def create_app(extra_config_settings={}):
 
     # Load constant app settings
     app.config.from_object('app.settings')
-    
+
     # Load extra settings from extra_config_settings param
     app.config.update(extra_config_settings)
 
@@ -72,6 +72,7 @@ def create_app(extra_config_settings={}):
     def context_processor():
         return dict(
             server_public_notification_key=app.config['SERVER_PUBLIC_NOTIFICATION_KEY'],
+            server_url=app.config['SERVER_URL'],
             user_manager=user_manager,
             subscribe_form=NotificationSubscriptionForm(request.form),
             unsubscribe_form=NotificationUnsubscriptionForm(request.form)
