@@ -15,6 +15,7 @@ Flask-User==1.0.1.5
 # Extras
 pywebpush==1.11.0
 email-validator==1.1.1
+PyMySQL==0.9.3
 
 # Automated tests
 werkzeug==0.16.1
