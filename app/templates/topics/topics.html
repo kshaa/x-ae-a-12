@@ -7,9 +7,10 @@
       {% if topics|length >0 %}
          {% for topic in topics %}
          <div class="card mt-4 topics-card">
-            <h5 class="card-header">Topic</h5>
             <div class="card-body">
-              <a href="/topics/{{topic.id}}/messages">{{ topic.label }} [{{ topic.code }}]</a>
+               <h5 class="card-title">{{ topic.label }}</h5>
+               <h6 class="card-subtitle mb-2 text-muted">Code: {{ topic.code }}</h6>
+               <a class="card-link" href="/topics/{{topic.id}}/messages">See messages</a>
               </div>
          </div>
          {% endfor %}
