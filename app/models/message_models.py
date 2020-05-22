@@ -4,13 +4,20 @@ from app import db
 from secrets import token_hex
 from sqlalchemy.orm import relationship
 
+# Define the subscription data model
+class Subscription(db.Model):
+    __tablename__ = 'subscriptions'
+    id = db.Column(db.Integer(), primary_key=True)
+    owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    subscription = db.Column(db.Unicode(1024), nullable=True, server_default=u'')
+
 # Define the API Keys data model
 class APIKeys(db.Model):
     __tablename__ = 'apikeys'
     id = db.Column(db.Integer(), primary_key=True)
     owner_user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     key = db.Column(db.String(512), nullable=False, unique=True)
-    label = db.Column(db.String(512), nullable=True)
+    label = db.Column(db.String(512), nullable=False, server_default=u'')
     owner_user = relationship("User", foreign_keys=[owner_user_id])
 
     def __init__(self):

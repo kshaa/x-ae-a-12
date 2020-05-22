@@ -8,6 +8,7 @@ from flask import request, url_for, send_from_directory
 from flask_user import current_user, login_required, roles_required
 
 from app import db
+from app.models.message_models import Subscription
 from app.models.user_models import UserProfileForm, NotificationSubscriptionForm, NotificationUnsubscriptionForm
 
 main_blueprint = Blueprint('main', __name__, static_folder='static', template_folder='templates')
@@ -24,11 +25,17 @@ def subscribe():
 
     # Process valid POST
     if form.validate():
-        # Copy form subscription to user_profile
-        current_user.subscription = form.subscription.data
+        subscription = Subscription.query.\
+            filter(Subscription.owner_user_id == current_user.id).\
+            filter(Subscription.subscription == form.subscription.data).\
+            first()
 
-        # Save user
-        db.session.commit()
+        if not subscription:
+            subscription = Subscription()
+            subscription.subscription = form.subscription.data
+            subscription.owner_user_id = current_user.id
+            db.session.add(subscription)
+            db.session.commit()
 
         return Response("{ success: true }", mimetype='application/json')
     else:
@@ -41,10 +48,9 @@ def unsubscribe():
 
     # Process valid POST
     if form.validate():
-        # Copy form subscription to user_profile
-        current_user.subscription = None
-
-        # Save user
+        subscription = Subscription.query.\
+            filter(Subscription.owner_user_id == current_user.id).\
+            delete()
         db.session.commit()
 
         return Response("{ success: true }", mimetype='application/json')

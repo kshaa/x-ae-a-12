@@ -60,10 +60,14 @@ function updateBtn() {
     }
 }
 
-function updateSubscriptionOnServer(subscription) {
-    if (subscription) {
-        const subscriptionJSON = JSON.stringify(subscription);
-        console.log('Sending to server notification subscription update: ' + subscriptionJSON);
+function updateSubscriptionOnServer(subscription, shouldBeSubscribed) {
+    if (!subscription) {
+        console.erro("Trying to update a non-existant subscription on server")
+    }
+
+    const subscriptionJSON = JSON.stringify(subscription);
+    if (shouldBeSubscribed) {
+        console.log('Sending to server subscription: ' + subscriptionJSON);
         const payload = new URLSearchParams();
         payload.append('csrf_token', getCSRFToken())
         payload.append('subscription', subscriptionJSON)
@@ -72,9 +76,10 @@ function updateSubscriptionOnServer(subscription) {
             body: payload
         })
     } else {
-        console.log('Sending to server notification subscription update: No subscription');
+        console.log('Sending to server unsubscription: ' + subscriptionJSON);
         const payload = new URLSearchParams();
         payload.append('csrf_token', getCSRFToken())
+        payload.append('subscription', subscriptionJSON)
         return fetch(`${window.location.protocol}//${window.location.host}/unsubscribe`, {
             method: 'POST',
             body: payload
@@ -89,37 +94,40 @@ function subscribeUser() {
         applicationServerKey: applicationServerKey
     })
         .then(function (subscription) {
-            console.log('User is subscribed.');
+            console.log('Subscribed user');
 
-            updateSubscriptionOnServer(subscription);
-
+            updateSubscriptionOnServer(subscription, true);
             isSubscribed = true;
 
             updateBtn();
         })
         .catch(function (err) {
-            console.log('Failed to subscribe the user: ', err);
+            console.log('Failed to subscribe user: ', err);
             updateBtn();
         });
 }
 
 function unsubscribeUser() {
     swRegistration.pushManager.getSubscription()
-        .then(function (subscription) {
+        .then(function(subscription) {
             if (subscription) {
-                return subscription.unsubscribe();
+                subscription.unsubscribe();
             }
-        })
-        .catch(function (error) {
-            console.log('Error unsubscribing', error);
-        })
-        .then(function () {
-            updateSubscriptionOnServer(null);
 
-            console.log('User is unsubscribed.');
+            return subscription
+        })
+        .then(function(subscription) {
+            if (subscription) {
+                updateSubscriptionOnServer(subscription, false);
+            }
+            
+            console.log('Unsubscribed user');
             isSubscribed = false;
-
+            
             updateBtn();
+        })
+        .catch(function(error) {
+            console.log('Failed to unsubscribe user:', error);
         });
 }
 
@@ -141,14 +149,13 @@ function initializeUI() {
     // Set the initial subscription value
     swRegistration.pushManager.getSubscription()
         .then(function (subscription) {
-            isSubscribed = !(subscription === null);
-
-            updateSubscriptionOnServer(subscription);
+            isSubscribed = subscription !== null;
 
             if (isSubscribed) {
-                console.log('User IS subscribed.');
+                updateSubscriptionOnServer(subscription, true);
+                console.log('User is subscribed');
             } else {
-                console.log('User is NOT subscribed.');
+                console.log('User is unsubscribed');
             }
 
             updateBtn();

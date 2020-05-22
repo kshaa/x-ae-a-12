@@ -3,7 +3,7 @@ from flask import request, url_for, current_app
 from flask_user import current_user, login_required
 
 from app import db
-from app.models.message_models import Messages, MessageForm, Topic
+from app.models.message_models import Messages, MessageForm, Topic, Subscription
 from app.models.user_models import User
 
 from pywebpush import webpush
@@ -32,7 +32,9 @@ def create_message_page(topic_id):
         db.session.commit()
 
         # Send notification
-        webpush(subscription_info = json.loads(current_user.subscription), data = message.content, vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
+        subscriptions = Subscription.query.filter(Subscription.owner_user_id == current_user.id).all()
+        for subscription in subscriptions:
+            webpush(subscription_info = json.loads(subscription.subscription), data = message.content, vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
 
         # Redirect to listing
         return redirect(url_for('messages.view_messages_page', topic_id = topic_id))

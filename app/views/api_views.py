@@ -4,7 +4,7 @@ from flask_user import current_user, login_required
 
 from app import db
 from app.models.user_models import User
-from app.models.message_models import APIKeys, Topic, Messages
+from app.models.message_models import APIKeys, Topic, Messages, Subscription
 
 from pywebpush import webpush
 import json
@@ -68,6 +68,8 @@ def notify():
     db.session.commit()
 
     # Notify owner
-    webpush(subscription_info = json.loads(user.subscription), data = message.content, vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
+    subscriptions = Subscription.query.filter(Subscription.owner_user_id == user.id).all()
+    for subscription in subscriptions:
+        webpush(subscription_info = json.loads(subscription.subscription), data = message.content, vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
 
     return response(200, True, "Successfully sent message to user")

@@ -65,7 +65,7 @@ def create_app(extra_config_settings={}):
     user_manager = UserManager(app, db, User)
 
     # Import message models
-    from .models.message_models import APIKeys, Messages, Topic
+    from .models.message_models import APIKeys, Messages, Topic, Subscription
 
     from app.models.user_models import NotificationSubscriptionForm, NotificationUnsubscriptionForm
     @app.context_processor
