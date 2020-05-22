@@ -50,6 +50,7 @@ def unsubscribe():
     if form.validate():
         subscription = Subscription.query.\
             filter(Subscription.owner_user_id == current_user.id).\
+            filter(Subscription.subscription == form.subscription.data).\
             delete()
         db.session.commit()
 

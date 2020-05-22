@@ -35,3 +35,18 @@ export HOST="http://localhost:5000"
 
 ./notify.sh "<TOPIC_CODE>" "Hello world!"
 ```
+
+## Illustrations for client usage
+#### Homepage
+Create a topic and API key here  
+![Homepage](./00_info.png)  
+
+#### CLI
+Configure `notify_local_example.sh` with your API key & topic code and send your message  
+![Send notification from CLI](./01_info.png)  
+
+#### Desktop notification
+![Desktop notification](./02_info.png)
+
+#### Mobile notification
+![Mobile notification](./03_info.jpeg)  

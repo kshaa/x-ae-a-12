@@ -6,6 +6,9 @@ from app import db
 from app.models.user_models import User
 from app.models.message_models import APIKeys, Topic, Messages, Subscription
 
+import traceback
+import logging
+
 from pywebpush import webpush
 import json
 
@@ -70,6 +73,9 @@ def notify():
     # Notify owner
     subscriptions = Subscription.query.filter(Subscription.owner_user_id == user.id).all()
     for subscription in subscriptions:
-        webpush(subscription_info = json.loads(subscription.subscription), data = message.content, vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
+        try:
+            webpush(subscription_info = json.loads(subscription.subscription), data = message.content, vapid_private_key = current_app.config['SERVER_PRIVATE_NOTIFICATION_KEY'], vapid_claims = {"sub": "mailto:" + current_app.config['NOTIFICATION_SENDTO_EMAIL']})
+        except Exception as e:
+            logging.error(traceback.format_exc())
 
     return response(200, True, "Successfully sent message to user")
